@@ -1,19 +1,31 @@
 defmodule XehWeb do
   use Application
 
-  # See http://elixir-lang.org/docs/stable/elixir/Application.html
-  # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
+    require Logger
 
-    children = [
-      # Define workers and child supervisors to be supervised
-      # worker(XehWeb.Worker, [arg1, arg2, arg3]),
-    ]
+    port = System.get_env("PORT") || 4000
+    Logger.info("Starting cowboy on port #{port}")
+    Plug.Adapters.Cowboy.http(XehWeb.App, [], port: port)
 
-    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
-    # for other strategies and supported options
+    children = []
+
     opts = [strategy: :one_for_one, name: XehWeb.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+end
+
+defmodule XehWeb.App do
+  import Plug.Conn
+
+  def init(options), do: options
+
+  def call(conn, _opts) do
+    packages = []
+
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Poison.encode!(packages))
   end
 end

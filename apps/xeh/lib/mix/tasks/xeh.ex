@@ -7,6 +7,8 @@ defmodule Mix.Tasks.Xeh do
   Lists all Xeh packages
   """
   def run(_) do
+    Xeh.start
+
     case @xeh_client.list do
       [] ->
         Mix.shell.info "No packages."

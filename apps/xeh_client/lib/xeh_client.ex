@@ -7,6 +7,6 @@ defmodule XehClient do
   @behaviour API
 
   def list do
-    []
+    HTTPoison.get!("http://localhost:4000").body |> Poison.decode!
   end
 end

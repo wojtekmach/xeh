@@ -18,9 +18,12 @@ defmodule XehWeb.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: applications(Mix.env),
      mod: {XehWeb, []}]
   end
+
+  defp applications(:test), do: applications(:default) ++ [:xeh_client]
+  defp applications(_),     do: [:logger, :cowboy, :plug]
 
   # Dependencies can be Hex packages:
   #
@@ -36,6 +39,11 @@ defmodule XehWeb.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:cowboy, "~> 1.0.0"},
+      {:plug, "~> 1.1"},
+      {:poison, "~> 2.0"},
+      {:xeh_client, in_umbrella: true, only: :test},
+    ]
   end
 end

@@ -1,8 +1,8 @@
 defmodule XehWebTest do
   use ExUnit.Case
-  doctest XehWeb
+  use Plug.Test
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "list packages: none" do
+    assert XehClient.list == []
   end
 end
