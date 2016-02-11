@@ -35,6 +35,6 @@ defmodule Xeh.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:xeh_client, in_umbrella: true}]
   end
 end
