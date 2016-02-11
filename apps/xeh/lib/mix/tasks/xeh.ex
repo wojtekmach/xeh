@@ -10,6 +10,11 @@ defmodule Mix.Tasks.Xeh do
     case @xeh_client.list do
       [] ->
         Mix.shell.info "No packages."
+
+      packages ->
+        for package <- packages do
+          Mix.shell.info package
+        end
     end
   end
 end
