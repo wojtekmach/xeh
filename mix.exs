@@ -1,4 +1,4 @@
-defmodule Xeh.Mixfile do
+defmodule XehUmbrella.Mixfile do
   use Mix.Project
 
   def project do
