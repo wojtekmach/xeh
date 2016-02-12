@@ -12,9 +12,16 @@ defmodule XehWebTest do
   end
 
   test "list packages: all" do
-    XehWeb.Registry.put("package 1")
-    XehWeb.Registry.put("package 2")
+    XehClient.create("package 1")
+    XehClient.create("package 2")
 
     assert XehClient.list == ["package 1", "package 2"]
+  end
+
+  test "create package is idempotent" do
+    XehClient.create("package 1")
+    XehClient.create("package 1")
+
+    assert XehClient.list == ["package 1"]
   end
 end

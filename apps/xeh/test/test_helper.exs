@@ -15,7 +15,7 @@ defmodule Xeh.FakeClient do
     Agent.get(__MODULE__, fn packages -> packages end) |> MapSet.to_list
   end
 
-  def put(package) do
+  def create(package) do
     Agent.update(__MODULE__, fn packages -> MapSet.put(packages, package) end)
   end
 end

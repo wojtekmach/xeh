@@ -21,15 +21,29 @@ end
 defmodule XehWeb.App do
   import Plug.Conn
   alias XehWeb.Registry
+  use Plug.Router
+  plug :match
+  plug :dispatch
 
-  def init(options), do: options
-
-  def call(conn, _opts) do
+  get "/" do
     packages = Registry.list
 
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, Poison.encode!(packages))
+  end
+
+  post "/" do
+    {:ok, name, _} = read_body(conn)
+
+    Registry.put(name)
+
+    conn
+    |> send_resp(200, "")
+  end
+
+  match _ do
+    send_resp(conn, 404, "Not found")
   end
 end
 

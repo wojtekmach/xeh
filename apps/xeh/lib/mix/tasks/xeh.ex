@@ -19,4 +19,20 @@ defmodule Mix.Tasks.Xeh do
         end
     end
   end
+
+  defmodule Create do
+    use Mix.Task
+
+    @xeh_client Application.get_env(:xeh, :xeh_client)
+
+    @moduledoc """
+    Creates a new package
+    """
+    def run([name]) do
+      Xeh.start
+
+      @xeh_client.create(name)
+      Mix.shell.info "Created package #{name}"
+    end
+  end
 end

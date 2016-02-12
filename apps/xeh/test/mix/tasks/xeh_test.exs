@@ -20,10 +20,21 @@ defmodule Mix.Tasks.Hex.SearchTest do
   end
 
   test "list packages: all" do
-    @xeh_client.put("foo")
-    @xeh_client.put("bar")
+    @xeh_client.create("foo")
+    @xeh_client.create("bar")
     Mix.Tasks.Xeh.run([])
     assert_received {:mix_shell, :info, ["foo"]}
     assert_received {:mix_shell, :info, ["bar"]}
+  end
+
+  test "create a package" do
+    Mix.Tasks.Xeh.run([])
+    assert_received {:mix_shell, :info, ["No packages."]}
+
+    Mix.Tasks.Xeh.Create.run(["foo"])
+    assert_received {:mix_shell, :info, ["Created package foo"]}
+
+    Mix.Tasks.Xeh.run([])
+    assert_received {:mix_shell, :info, ["foo"]}
   end
 end
