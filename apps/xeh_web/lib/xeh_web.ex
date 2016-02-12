@@ -1,6 +1,10 @@
 defmodule XehWeb do
   use Application
 
+  def start do
+    Application.ensure_all_started(:xeh_web)
+  end
+
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
     require Logger
