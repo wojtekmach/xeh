@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Hex.SearchTest do
   use ExUnit.Case
 
-  @xeh_client Xeh.FakeClient
+  @xeh_client Application.get_env(:xeh, :xeh_client)
 
   setup_all do
     @xeh_client.start_link
